@@ -1,7 +1,11 @@
 import { Sequelize } from 'sequelize';
 import allConfig from '../config/config.js';
 
-import initItemModel from './item.mjs';
+import initUserModel from './user.mjs';
+import initEducationModel from './education.mjs';
+import initWorkExperienceModel from './work-experience.mjs';
+import initTemplateModel from './template.mjs';
+import initResumeModel from './resume.mjs';
 
 const env = process.env.NODE_ENV || 'development';
 
@@ -11,7 +15,23 @@ const db = {};
 
 const sequelize = new Sequelize(config.database, config.username, config.password, config);
 
-// add your model definitions to db here
+db.User = initUserModel(sequelize, Sequelize.DataTypes);
+db.Education = initEducationModel(sequelize, Sequelize.DataTypes);
+db.WorkExperience = initWorkExperienceModel(sequelize, Sequelize.DataTypes);
+db.Template = initTemplateModel(sequelize, Sequelize.DataTypes);
+db.Resume = initResumeModel(sequelize, Sequelize.DataTypes);
+
+db.Education.belongsTo(db.User);
+db.User.hasMany(db.Education);
+
+db.WorkExperience.belongsTo(db.User);
+db.User.hasMany(db.WorkExperience);
+
+db.Resume.belongsTo(db.User);
+db.User.hasMany(db.Resume);
+
+db.Resume.belongsTo(db.Template);
+db.Template.hasMany(db.Resume);
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
