@@ -1,9 +1,22 @@
 module.exports = {
   development: {
-    username: '<YOUR_USER_NAME>',
+    username: process.env.DATABASE_USERNAME,
     password: null,
-    database: '<YOUR_DATABASE_NAME>',
+    database: 'resume-github',
     host: '127.0.0.1',
     dialect: 'postgres',
+    logging: false,
+  },
+  production: {
+    use_env_variable: 'DATABASE_URL',
+    dialect: 'postgres',
+    protocol: 'postgres',
+    dialectOptions: {
+      ssl: {
+        // https://github.com/sequelize/sequelize/issues/12083
+        require: true,
+        rejectUnauthorized: false,
+      },
+    },
   },
 };
