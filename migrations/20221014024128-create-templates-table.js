@@ -13,6 +13,12 @@ module.exports = {
       html_content: {
         type: Sequelize.TEXT,
       },
+      html_sample_content: {
+        type: Sequelize.TEXT,
+      },
+      html_article_template: {
+        type: Sequelize.TEXT,
+      },
       created_at: {
         allowNull: false,
         type: Sequelize.DATE,

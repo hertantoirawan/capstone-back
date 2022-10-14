@@ -14,6 +14,12 @@ export default function initTemplateModel(sequelize, DataTypes) {
       htmlContent: {
         type: DataTypes.TEXT,
       },
+      htmlSampleContent: {
+        type: DataTypes.TEXT,
+      },
+      htmlArticleTemplate: {
+        type: DataTypes.TEXT,
+      },
       createdAt: {
         allowNull: false,
         type: DataTypes.DATE,
