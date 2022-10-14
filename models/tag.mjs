@@ -1,6 +1,6 @@
-export default function initUserModel(sequelize, DataTypes) {
+export default function initTagModel(sequelize, DataTypes) {
   return sequelize.define(
-    'user',
+    'tag',
     {
       id: {
         allowNull: false,
@@ -8,22 +8,7 @@ export default function initUserModel(sequelize, DataTypes) {
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
-      githubUsername: {
-        type: DataTypes.STRING,
-      },
       name: {
-        type: DataTypes.STRING,
-      },
-      profile: {
-        type: DataTypes.STRING,
-      },
-      website: {
-        type: DataTypes.STRING,
-      },
-      email: {
-        type: DataTypes.STRING,
-      },
-      phone: {
         type: DataTypes.STRING,
       },
       createdAt: {
