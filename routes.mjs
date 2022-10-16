@@ -5,7 +5,7 @@ import initUsersController from './controllers/users-controller.mjs';
 import initWorkExperienceController from './controllers/work-experience-controller.mjs';
 import initEducationController from './controllers/education-controller.mjs';
 import initResumesController from './controllers/resumes-controller.mjs';
-import initApplicationsController from './controllers/applications-controller.mjs';
+import initApplicationsController from './controllers/applications-controller..mjs';
 
 export default function bindRoutes(app) {
   const usersController = initUsersController(db);

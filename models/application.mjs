@@ -8,6 +8,13 @@ export default function initApplicationModel(sequelize, DataTypes) {
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
+      userId: {
+        type: DataTypes.INTEGER,
+        references: {
+          model: 'users',
+          key: 'id',
+        },
+      },
       resumeId: {
         type: DataTypes.INTEGER,
         references: {
