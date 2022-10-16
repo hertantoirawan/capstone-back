@@ -30,7 +30,7 @@ module.exports = {
       resume_id: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'resume',
+          model: 'resumes',
           key: 'id',
         },
       },

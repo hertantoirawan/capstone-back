@@ -1,19 +1,19 @@
-import jsSHA from 'jssha';
+// import jsSHA from 'jssha';
 import { Op } from 'sequelize';
 
-const SALT = process.env.SALT_PASSWORD;
+// const SALT = process.env.SALT_PASSWORD;
 
-const getHashSalted = (input) => {
-  // create new SHA object
-  const shaObj = new jsSHA('SHA-512', 'TEXT', { encoding: 'UTF8' });
-  // create an unhashed cookie string based on user ID and salt
-  const unhashedString = `${input}-${SALT}`;
+// const getHashSalted = (input) => {
+//   // create new SHA object
+//   const shaObj = new jsSHA('SHA-512', 'TEXT', { encoding: 'UTF8' });
+//   // create an unhashed cookie string based on user ID and salt
+//   const unhashedString = `${input}-${SALT}`;
 
-  // generate a hashed cookie string using SHA object
-  shaObj.update(unhashedString);
+//   // generate a hashed cookie string using SHA object
+//   shaObj.update(unhashedString);
 
-  return shaObj.getHash('HEX');
-};
+//   return shaObj.getHash('HEX');
+// };
 
 export default function initUsersController(db) {
   const login = async (req, res) => {
@@ -33,28 +33,52 @@ export default function initUsersController(db) {
   };
 
   const getUser = async (req, res) => {
-    const { user } = req.body;
-    const input = user.toLowerCase();
-    console.log(input);
+    const { userId } = req.params;
 
     try {
-      const users = await db.User.findAll({
+      const user = await db.User.findOne({
         where: {
-          email: {
-            [Op.like]: `${input}%`,
-          },
+          id: userId,
         },
       });
-      console.log(users);
+      console.log(user);
 
-      res.send(users);
+      res.send(user);
     } catch (err) {
-      console.log(`Error retrieving users: ${err}`);
+      console.log(`Error retrieving user: ${err}`);
     }
   };
 
   const updateUser = async (req, res) => {
+    const { userId } = req.params;
+    const {
+      name, profile, website, email, phone,
+    } = req.body;
 
+    try {
+      const user = await db.User.findOne({
+        where: {
+          id: userId,
+        },
+      });
+      console.log('user', user);
+
+      if (user) {
+        user.name = name;
+        user.profile = profile;
+        user.website = website;
+        user.email = email;
+        user.phone = phone;
+
+        await user.save();
+
+        res.send({
+          email,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return {

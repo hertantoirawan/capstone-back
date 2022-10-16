@@ -74,7 +74,7 @@ module.exports = {
       },
     ];
 
-    await queryInterface.bulkInsert('work_experience', workExperienceData);
+    await queryInterface.bulkInsert('work-experiences', workExperienceData);
 
     const templateData = [
       {
@@ -2277,7 +2277,7 @@ module.exports = {
       },
     ];
 
-    const [frontendResumeHertanto, backendResumeHertanto, fullstackResumeHertanto, techleadResumeHertanto] = await queryInterface.bulkInsert('resume', resumeData, {
+    const [frontendResumeHertanto, backendResumeHertanto, fullstackResumeHertanto, techleadResumeHertanto] = await queryInterface.bulkInsert('resumes', resumeData, {
       returning: true,
     });
 
@@ -2366,14 +2366,116 @@ module.exports = {
     ];
 
     await queryInterface.bulkInsert('resume_tags', resumeTagsData);
+
+    const applicationData = [
+      {
+        resume_id: frontendResumeHertanto.id,
+        role: 'Frontend Engineer',
+        company: 'Google',
+        date: new Date(),
+        created_at: new Date(),
+        updated_at: new Date(),
+      },
+      {
+        resume_id: frontendResumeHertanto.id,
+        role: 'Software Engineer',
+        company: 'Stripe',
+        date: new Date(),
+        created_at: new Date(),
+        updated_at: new Date(),
+      },
+      {
+        resume_id: frontendResumeHertanto.id,
+        role: 'Software Engineer',
+        company: 'Microsoft',
+        date: new Date(),
+        created_at: new Date(),
+        updated_at: new Date(),
+      },
+      {
+        resume_id: backendResumeHertanto.id,
+        role: 'Software Engineer',
+        company: 'Grab',
+        date: new Date(),
+        created_at: new Date(),
+        updated_at: new Date(),
+      },
+      {
+        resume_id: backendResumeHertanto.id,
+        role: 'Backend Engineer',
+        company: 'ZenDesk',
+        date: new Date(),
+        created_at: new Date(),
+        updated_at: new Date(),
+      },
+      {
+        resume_id: backendResumeHertanto.id,
+        role: 'Backend Engineer',
+        company: 'Netflix',
+        date: new Date(),
+        created_at: new Date(),
+        updated_at: new Date(),
+      },
+      {
+        resume_id: fullstackResumeHertanto.id,
+        role: 'Backend Engineer',
+        company: 'Binance',
+        date: new Date(),
+        created_at: new Date(),
+        updated_at: new Date(),
+      },
+      {
+        resume_id: fullstackResumeHertanto.id,
+        role: 'Software Engineer',
+        company: 'Coinbase',
+        date: new Date(),
+        created_at: new Date(),
+        updated_at: new Date(),
+      },
+      {
+        resume_id: techleadResumeHertanto.id,
+        role: 'Software Engineer',
+        company: 'Traveloka',
+        date: new Date(),
+        created_at: new Date(),
+        updated_at: new Date(),
+      },
+      {
+        resume_id: techleadResumeHertanto.id,
+        role: 'Software Engineer',
+        company: 'Facebook',
+        date: new Date(),
+        created_at: new Date(),
+        updated_at: new Date(),
+      },
+      {
+        resume_id: techleadResumeHertanto.id,
+        role: 'Tech Lead',
+        company: 'Apple',
+        date: new Date(),
+        created_at: new Date(),
+        updated_at: new Date(),
+      },
+      {
+        resume_id: techleadResumeHertanto.id,
+        role: 'Team Lead',
+        company: 'Robinhood',
+        date: new Date(),
+        created_at: new Date(),
+        updated_at: new Date(),
+      },
+    ];
+
+    await queryInterface.bulkInsert('applications', applicationData);
   },
 
   down: async (queryInterface) => {
+    await queryInterface.bulkDelete('applications', null, {});
     await queryInterface.bulkDelete('resume_tags', null, {});
     await queryInterface.bulkDelete('tags', null, {});
-    await queryInterface.bulkDelete('resume', null, {});
+    await queryInterface.bulkDelete('resumes', null, {});
     await queryInterface.bulkDelete('templates', null, {});
-    await queryInterface.bulkDelete('work_experience', null, {});
+    await queryInterface.bulkDelete('work-experiences', null, {});
     await queryInterface.bulkDelete('education', null, {});
     await queryInterface.bulkDelete('users', null, {});
   },

@@ -36,9 +36,9 @@ export default function bindRoutes(app) {
   app.post('/user/:userId/education/:educationId', educationController.updateEducation);
   app.post('/user/:userId/education', educationController.createEducation);
 
-  app.get('/user/:userId/work', workController.getWork);
-  app.post('/user/:userId/work/:workId', workController.updateWork);
-  app.post('/user/:userId/work', workController.createWork);
+  app.get('/user/:userId/work', workController.getWorkExperience);
+  app.post('/user/:userId/work/:workId', workController.updateWorkExperience);
+  app.post('/user/:userId/work', workController.createWorkExperience);
 
   app.get('*', (request, response) => {
     response.sendFile(resolve('dist', 'main.html'));

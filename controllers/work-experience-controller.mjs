@@ -1,33 +1,74 @@
-import { Op } from 'sequelize';
-
 export default function initWorkExperienceController(db) {
   const getWorkExperience = async (req, res) => {
-    const { user } = req.body;
-    const input = user.toLowerCase();
-    console.log(input);
+    const { userId } = req.params;
 
     try {
-      const users = await db.User.findAll({
+      const work = await db.WorkExperience.findAll({
         where: {
-          email: {
-            [Op.like]: `${input}%`,
-          },
+          userId,
         },
+        order: [['start', 'DESC']],
       });
-      console.log(users);
+      console.log(work);
 
-      res.send(users);
+      res.send(work);
     } catch (err) {
-      console.log(`Error retrieving users: ${err}`);
+      console.log(`Error retrieving work: ${err}`);
     }
   };
 
   const updateWorkExperience = async (req, res) => {
+    const { userId, workId } = req.params;
+    const {
+      role, company, start, end, contribution,
+    } = req.body;
 
+    try {
+      const work = await db.WorkExperience.findOne({
+        where: {
+          id: workId,
+        },
+      });
+      console.log('work experience', work);
+
+      if (work) {
+        work.role = role;
+        work.company = company;
+        work.start = start;
+        work.end = end;
+        work.contribution = contribution;
+
+        await work.save();
+
+        res.send(work);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const createWorkExperience = async (req, res) => {
+    const { userId } = req.params;
+    const {
+      role, company, start, end, contribution,
+    } = req.body;
 
+    try {
+      const work = await db.WorkExperience.create({
+        userId,
+        role,
+        company,
+        start,
+        end,
+        contribution,
+
+      });
+      console.log('work experience', work);
+
+      res.send(work);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return {

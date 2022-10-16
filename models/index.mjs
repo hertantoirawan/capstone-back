@@ -7,6 +7,7 @@ import initWorkExperienceModel from './work-experience.mjs';
 import initTemplateModel from './template.mjs';
 import initResumeModel from './resume.mjs';
 import initTagModel from './tag.mjs';
+import initApplicationModel from './application.mjs';
 
 const env = process.env.NODE_ENV || 'development';
 
@@ -22,6 +23,7 @@ db.WorkExperience = initWorkExperienceModel(sequelize, Sequelize.DataTypes);
 db.Template = initTemplateModel(sequelize, Sequelize.DataTypes);
 db.Resume = initResumeModel(sequelize, Sequelize.DataTypes);
 db.Tag = initTagModel(sequelize, Sequelize.DataTypes);
+db.Application = initApplicationModel(sequelize, Sequelize.DataTypes);
 
 db.Education.belongsTo(db.User);
 db.User.hasMany(db.Education);
@@ -37,6 +39,9 @@ db.Template.hasMany(db.Resume);
 
 db.Resume.belongsToMany(db.Tag, { through: 'resume_tags' });
 db.Tag.belongsToMany(db.Resume, { through: 'resume_tags' });
+
+db.Application.belongsTo(db.Resume);
+db.Resume.hasMany(db.Application);
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
