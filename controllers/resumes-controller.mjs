@@ -1,3 +1,24 @@
+const insertResumeTags = async (db, resumeId, newTag) => {
+  try {
+    let tag = await db.Tag.findOne({
+      where: {
+        name: newTag.name,
+      },
+    });
+
+    if (!tag) {
+      tag = await db.Tag.create(newTag);
+    }
+
+    await db.ResumeTag.create({
+      resumeId,
+      tagId: tag.id,
+    });
+  } catch (err) {
+    console.log(`error creating tag ${err}`);
+  }
+};
+
 export default function initResumesController(db) {
   const getResume = async (req, res) => {
     const { userId } = req.params;
@@ -53,8 +74,10 @@ export default function initResumesController(db) {
   const createResume = async (req, res) => {
     const { userId } = req.params;
     const {
-      templateId, name, description, html,
+      templateId, name, description, htmlContent, tags,
     } = req.body;
+
+    console.log(req.body);
 
     try {
       const resume = await db.Resume.create({
@@ -62,9 +85,11 @@ export default function initResumesController(db) {
         templateId,
         name,
         description,
-        htmlContent: html,
+        htmlContent,
       });
       console.log('resume', resume);
+
+      tags.map((tag) => insertResumeTags(db, resume.id, tag));
 
       res.send(resume);
     } catch (error) {

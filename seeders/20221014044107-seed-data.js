@@ -82,10 +82,7 @@ module.exports = {
         html_content: `<!DOCTYPE html>
 <html>
   <head>
-    <title>John Smith - Curriculum Vitae</title>
-
     <meta name="viewport" content="width=device-width" />
-    <meta name="description" content="The Curriculum Vitae of Joe Bloggs." />
     <meta charset="UTF-8" />
 
     <link
@@ -333,15 +330,9 @@ module.exports = {
 
         <div id="contactDetails">
           <ul>
-            <li>
-              e:
-              <a href="mailto:{{email}}" target="_blank">{{email}}</a>
-            </li>
-            <li>
-              w:
-              <a href="{{website}}">{{website}}</a>
-            </li>
-            <li>m: +{{phone}}</li>
+            <li>e: {{email}}</li>
+            <li>w: {{website}}</li>
+            <li>m: {{phone}}</li>
           </ul>
         </div>
         <div class="clear"></div>

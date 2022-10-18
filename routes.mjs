@@ -6,6 +6,7 @@ import initWorkExperienceController from './controllers/work-experience-controll
 import initEducationController from './controllers/education-controller.mjs';
 import initResumesController from './controllers/resumes-controller.mjs';
 import initApplicationsController from './controllers/applications-controller..mjs';
+import initTemplatesController from './controllers/templates-controller.mjs';
 
 export default function bindRoutes(app) {
   const usersController = initUsersController(db);
@@ -13,6 +14,7 @@ export default function bindRoutes(app) {
   const workController = initWorkExperienceController(db);
   const educationController = initEducationController(db);
   const applicationsController = initApplicationsController(db);
+  const templatesController = initTemplatesController(db);
 
   app.get('/login', usersController.login);
   app.get('/logout', usersController.logout);
@@ -45,6 +47,9 @@ export default function bindRoutes(app) {
   app.get('/user/:userId/application', applicationsController.getApplication);
   app.post('/user/:userId/work/:applicationId', applicationsController.updateApplication);
   app.post('/user/:userId/application', applicationsController.createApplication);
+
+  app.get('/template/:templateId', templatesController.getTemplate);
+  app.get('/template', templatesController.getTemplates);
 
   app.get('*', (request, response) => {
     response.sendFile(resolve('dist', 'main.html'));
