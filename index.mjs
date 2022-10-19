@@ -1,20 +1,13 @@
 import express from 'express';
+import session from 'express-session';
 import cookieParser from 'cookie-parser';
 import methodOverride from 'method-override';
-// import cors from 'cors';
 import passport from 'passport';
 import bindRoutes from './routes.mjs';
 import runPassportSetup from './passport.mjs';
 
-// const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:3000';
-
 // Initialise Express instance
 const app = express();
-// Set CORS headers
-// app.use(cors({
-//   credentials: true,
-//   origin: FRONTEND_URL,
-// }));
 // Set the Express view engine to expect EJS templates
 app.set('view engine', 'ejs');
 // Bind cookie parser middleware to parse cookies in requests
@@ -28,11 +21,22 @@ app.use(methodOverride('_method'));
 // Expose the files stored in the public folder
 app.use(express.static('public'));
 
-// Passport Github
-// app.use(passport.initialize());
-// app.use(passport.session());
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    httpOnly: true,
+    secure: false,
+    maxAge: 24 * 60 * 60 * 1000,
+  },
+}));
 
-// runPassportSetup();
+// Passport Github
+app.use(passport.initialize());
+app.use(passport.session());
+
+runPassportSetup();
 
 // Bind route definitions to the Express application
 bindRoutes(app);

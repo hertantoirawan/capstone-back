@@ -25,7 +25,7 @@ export default function bindRoutes(app) {
   app.get('/auth/github/callback',
     passport.authenticate('github', { failureRedirect: '/login' }),
     (req, res) => {
-    // Successful authentication, redirect home.
+      // Successful authentication, redirect home.
       res.redirect('/');
     });
 
@@ -52,6 +52,7 @@ export default function bindRoutes(app) {
   app.get('/template', templatesController.getTemplates);
 
   app.get('*', (request, response) => {
+    console.log(request.user);
     response.sendFile(resolve('dist', 'main.html'));
   });
 }
