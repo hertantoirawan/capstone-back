@@ -7,6 +7,7 @@ import initEducationController from './controllers/education-controller.mjs';
 import initResumesController from './controllers/resumes-controller.mjs';
 import initApplicationsController from './controllers/applications-controller..mjs';
 import initTemplatesController from './controllers/templates-controller.mjs';
+import initAuthenticationController from './controllers/auth-controller.mjs';
 
 export default function bindRoutes(app) {
   const usersController = initUsersController(db);
@@ -15,19 +16,31 @@ export default function bindRoutes(app) {
   const educationController = initEducationController(db);
   const applicationsController = initApplicationsController(db);
   const templatesController = initTemplatesController(db);
+  const authController = initAuthenticationController(db);
 
   app.get('/login', usersController.login);
   app.get('/logout', usersController.logout);
 
   app.get('/auth/github',
-    passport.authenticate('github', { scope: ['user:email'] }));
+    passport.authenticate('github', {
+      scope: ['user:email'],
+    }));
 
   app.get('/auth/github/callback',
-    passport.authenticate('github', { failureRedirect: '/login' }),
-    (req, res) => {
-      // Successful authentication, redirect home.
-      res.redirect('/');
+    passport.authenticate('github', {
+      // successRedirect: '/auth/github/redirect',
+      failureRedirect: '/auth/github',
+    }), (req, res) => {
+      console.log('in auth callback');
+
+      const { accessToken } = req.user;
+      const { id, name, githubUsername } = req.user[0];
+
+      // TODO: is there a better way to pass params besides on query string?
+      res.redirect(`${process.env.APP_LOGIN_URL}?userId=${id}&name=${name}&username=${githubUsername}&accessToken=${accessToken}`);
     });
+
+  app.get('/auth/github/redirect', authController.redirect);
 
   app.get('/user/:userId', usersController.getUser);
   app.post('/user/:userId', usersController.updateUser);

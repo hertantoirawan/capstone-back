@@ -1,6 +1,7 @@
 import passport from 'passport';
 import passportGithub from 'passport-github2';
 import dotenv from 'dotenv';
+import db from './models/index.mjs';
 
 dotenv.config({ path: './.env' });
 
@@ -10,19 +11,41 @@ export default function runPassportSetup() {
   passport.use(new GitHubStrategy({
     clientID: process.env.GITHUB_CLIENT_ID,
     clientSecret: process.env.GITHUB_CLIENT_SECRET,
-    callbackURL: '/auth/github/callback',
+    callbackURL: process.env.APP_CALLBACK_URL,
   },
-  ((accessToken, refreshToken, profile, done) => {
-  // User.findOrCreate({ githubId: profile.id }, (err, user) => done(err, user));
-    console.log(profile);
-    done(null, profile);
+  (async (accessToken, refreshToken, profile, done) => {
+    // create or find user
+    const user = await db.User.findOrCreate({
+      where: { githubUsername: profile.username },
+      defaults: {
+        name: profile.displayName,
+        email: profile.email,
+      },
+    });
+
+    // save access token
+    await db.OAuthToken.create({
+      userId: user.id,
+      accessToken,
+    });
+
+    user.accessToken = accessToken;
+
+    done(null, user);
   })));
 
   passport.serializeUser((user, done) => {
     done(null, user);
   });
 
-  passport.deserializeUser((user, done) => {
+  passport.deserializeUser(async (user, done) => {
     done(null, user);
+
+    // try {
+    //   const user = await db.User.findOne({ where: { linkedinId: id } });
+    //   done(null, user);
+    // } catch (err) {
+    //   done(err);
+    // }
   });
 }

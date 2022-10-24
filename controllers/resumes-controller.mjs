@@ -36,7 +36,7 @@ export default function initResumesController(db) {
           userId,
         },
       });
-      console.log(resume);
+      // console.log(resume);
 
       res.send(resume);
     } catch (err) {

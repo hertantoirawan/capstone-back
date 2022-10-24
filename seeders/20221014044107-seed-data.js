@@ -6,7 +6,7 @@ module.exports = {
         github_username: 'hertantoirawan',
         profile: 'Software engineer with 10+ years of experience in Asia and the US.',
         website: 'linkedin.com/hertanto',
-        email: 'hertanto@gmail.com.',
+        email: 'hertanto@gmail.com',
         phone: '628123456789',
         created_at: new Date(),
         updated_at: new Date(),

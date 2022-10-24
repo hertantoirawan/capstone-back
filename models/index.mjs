@@ -9,6 +9,7 @@ import initResumeModel from './resume.mjs';
 import initTagModel from './tag.mjs';
 import initResumeTagModel from './resume_tag.mjs';
 import initApplicationModel from './application.mjs';
+import initOAuthTokenModel from './oauth-token.mjs';
 
 const env = process.env.NODE_ENV || 'development';
 
@@ -26,6 +27,7 @@ db.Resume = initResumeModel(sequelize, Sequelize.DataTypes);
 db.Tag = initTagModel(sequelize, Sequelize.DataTypes);
 db.ResumeTag = initResumeTagModel(sequelize, Sequelize.DataTypes);
 db.Application = initApplicationModel(sequelize, Sequelize.DataTypes);
+db.OAuthToken = initOAuthTokenModel(sequelize, Sequelize.DataTypes);
 
 db.Education.belongsTo(db.User);
 db.User.hasMany(db.Education);
@@ -44,6 +46,9 @@ db.Tag.belongsToMany(db.Resume, { through: db.ResumeTag });
 
 db.Application.belongsTo(db.Resume);
 db.Resume.hasMany(db.Application);
+
+db.OAuthToken.belongsTo(db.User);
+db.User.hasMany(db.OAuthToken);
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
