@@ -46,6 +46,7 @@ export default function bindRoutes(app) {
   app.post('/user/:userId', usersController.updateUser);
 
   app.get('/user/:userId/resume', resumesController.getResume);
+  app.get('/user/:userId/resume/:resumeId', resumesController.getResumeById);
   app.post('/user/:userId/resume/:resumeId', resumesController.updateResume);
   app.post('/user/:userId/resume', resumesController.createResume);
 

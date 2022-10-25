@@ -44,6 +44,30 @@ export default function initResumesController(db) {
     }
   };
 
+  const getResumeById = async (req, res) => {
+    const { userId, resumeId } = req.params;
+
+    try {
+      const resume = await db.Resume.findOne({
+        include: {
+          model: db.Tag,
+          attributes: ['name'],
+          through: {
+            attributes: [],
+          },
+        },
+        where: {
+          id: resumeId,
+        },
+      });
+      // console.log(resume);
+
+      res.send(resume);
+    } catch (err) {
+      console.log(`Error retrieving resume: ${err}`);
+    }
+  };
+
   const updateResume = async (req, res) => {
     const { userId, resumeId } = req.params;
     const {
@@ -99,6 +123,7 @@ export default function initResumesController(db) {
 
   return {
     getResume,
+    getResumeById,
     updateResume,
     createResume,
   };
