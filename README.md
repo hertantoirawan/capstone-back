@@ -1,4 +1,4 @@
-# GitHub Resume Back End
+# GitHub Resume (Back End)
 
 A mobile app to easily create resume based on your GitHub projects.
 
