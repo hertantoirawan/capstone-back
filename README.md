@@ -1,9 +1,9 @@
-# GitHub Resume Backend
+# GitHub Resume Back-end
 
 A mobile app to easily create resume based on your GitHub projects.
 
-This repository is the backend part of the app. <br />
-The frontend part of this app is <a href="https://github.com/hertantoirawan/github-resume-frontend">here</a>.
+This repository is the back-end part of the app. <br />
+The front-end part of this app is <a href="https://github.com/hertantoirawan/github-resume-frontend">here</a>.
 
 ## Tech Used
 - Back end is done using [Node](https://nodejs.org/) and [Express](https://expressjs.com/)
