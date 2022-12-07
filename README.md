@@ -1,6 +1,8 @@
 # GitHub Resume (Back End)
 
-A mobile app to easily create resume based on your GitHub projects.
+Github Resume is a mobile app to easily create resume based on your GitHub projects.
+
+**DEMO** : [https://youtu.be/wv6iyOagxmE](https://youtu.be/wv6iyOagxmE)
 
 This repository is the back end part of the app. <br />
 The front end part of this app is <a href="https://github.com/hertantoirawan/github-resume-frontend">here</a>.
